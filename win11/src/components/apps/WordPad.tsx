@@ -1,18 +1,44 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
 
 const FONT_SIZES = ['12', '14', '16', '18', '20', '24', '28', '32', '36'];
 const FONT_FAMILIES = ['宋体', '黑体', '微软雅黑', '楷体', 'Arial', 'Times New Roman'];
 
 export default function WordPad() {
   const editorRef = useRef<HTMLDivElement>(null);
+  const fontMenuRef = useRef<HTMLDivElement>(null);
   const [currentFontSize, setCurrentFontSize] = useState('14');
   const [currentFontFamily, setCurrentFontFamily] = useState('宋体');
   const [showFontMenu, setShowFontMenu] = useState(false);
   const [wordCount, setWordCount] = useState(0);
 
+  useEffect(() => {
+    if (!showFontMenu) return;
+    const handler = (e: MouseEvent) => {
+      if (fontMenuRef.current && !fontMenuRef.current.contains(e.target as Node)) {
+        setShowFontMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showFontMenu]);
+
   const execCmd = useCallback((cmd: string, value?: string) => {
     document.execCommand(cmd, false, value);
     editorRef.current?.focus();
+  }, []);
+
+  const applyFontSize = useCallback((px: string) => {
+    const editor = editorRef.current;
+    if (!editor) return;
+    document.execCommand('styleWithCSS', false, 'false');
+    document.execCommand('fontSize', false, '7');
+    editor.querySelectorAll('font[size="7"]').forEach((el) => {
+      const span = document.createElement('span');
+      span.style.fontSize = `${px}px`;
+      span.innerHTML = (el as HTMLElement).innerHTML;
+      el.parentNode?.replaceChild(span, el);
+    });
+    editor.focus();
   }, []);
 
   const handleInput = useCallback(() => {
@@ -46,7 +72,7 @@ export default function WordPad() {
       {/* Toolbar */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 2, padding: '4px 8px', borderBottom: '1px solid #ddd', background: '#fafafa', flexWrap: 'wrap' }}>
         {/* Font Family */}
-        <div style={{ position: 'relative' }}>
+        <div ref={fontMenuRef} style={{ position: 'relative' }}>
           <button
             className="wordpad-btn"
             onMouseDown={(e) => { e.preventDefault(); setShowFontMenu(!showFontMenu); }}
@@ -74,7 +100,7 @@ export default function WordPad() {
         {/* Font Size */}
         <select
           value={currentFontSize}
-          onChange={(e) => { setCurrentFontSize(e.target.value); execCmd('fontSize', e.target.value); }}
+          onChange={(e) => { setCurrentFontSize(e.target.value); applyFontSize(e.target.value); }}
           style={{ padding: '4px 2px', fontSize: 13, border: '1px solid #ccc', borderRadius: 4 }}
         >
           {FONT_SIZES.map((s) => (

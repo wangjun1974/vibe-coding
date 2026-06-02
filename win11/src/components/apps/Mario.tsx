@@ -70,15 +70,24 @@ export default function Mario() {
   }, []);
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
     const down = (e: KeyboardEvent) => {
       keysRef.current[e.code] = true;
       if (['Space', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'ArrowDown'].includes(e.code)) e.preventDefault();
       if (e.code === 'KeyR' && stateRef.current.phase !== 'play') reset();
     };
     const up = (e: KeyboardEvent) => { keysRef.current[e.code] = false; };
-    window.addEventListener('keydown', down);
-    window.addEventListener('keyup', up);
-    return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
+    const blur = () => { keysRef.current = {}; };
+    canvas.addEventListener('keydown', down);
+    canvas.addEventListener('keyup', up);
+    canvas.addEventListener('blur', blur);
+    canvas.focus();
+    return () => {
+      canvas.removeEventListener('keydown', down);
+      canvas.removeEventListener('keyup', up);
+      canvas.removeEventListener('blur', blur);
+    };
   }, [reset]);
 
   useEffect(() => {
@@ -312,7 +321,9 @@ export default function Mario() {
         ref={canvasRef}
         width={CW}
         height={CH}
-        style={{ border: '2px solid #333', display: 'block' }}
+        tabIndex={0}
+        onClick={() => canvasRef.current?.focus()}
+        style={{ border: '2px solid #333', display: 'block', outline: 'none' }}
       />
     </div>
   );

@@ -73,6 +73,7 @@ export default function Minesweeper() {
     if (status !== 'playing') {
       if (timerRef.current) clearInterval(timerRef.current);
     }
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [status]);
 
   const startTimer = () => {
