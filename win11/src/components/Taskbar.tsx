@@ -13,6 +13,8 @@ const PINNED_APPS = [
   { id: 'terminal', name: '终端', icon: '⬛' },
   { id: 'calculator', name: '计算器', icon: '🔢' },
   { id: 'settings', name: '设置', icon: '⚙️' },
+  { id: 'minesweeper', name: '扫雷', icon: '💣' },
+  { id: 'mario', name: '超级马里奥', icon: '🍄' },
 ];
 
 export default function Taskbar({ onStartClick, startOpen }: Props) {

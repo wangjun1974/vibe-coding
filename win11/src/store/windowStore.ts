@@ -21,6 +21,8 @@ const APP_DEFAULTS: Record<string, { width: number; height: number; minWidth: nu
   explorer: { width: 800, height: 520, minWidth: 500, minHeight: 360 },
   settings: { width: 760, height: 540, minWidth: 560, minHeight: 400 },
   browser: { width: 900, height: 600, minWidth: 500, minHeight: 400 },
+  minesweeper: { width: 320, height: 440, minWidth: 300, minHeight: 420 },
+  mario: { width: 800, height: 560, minWidth: 640, minHeight: 500 },
 };
 
 export const useWindowStore = create<WindowStore>((set) => ({

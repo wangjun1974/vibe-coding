@@ -7,6 +7,8 @@ import Terminal from './apps/Terminal';
 import Explorer from './apps/Explorer';
 import Settings from './apps/Settings';
 import Browser from './apps/Browser';
+import Minesweeper from './apps/Minesweeper';
+import Mario from './apps/Mario';
 
 const APPS: Record<string, React.FC> = {
   calculator: Calculator,
@@ -15,6 +17,8 @@ const APPS: Record<string, React.FC> = {
   explorer: Explorer,
   settings: Settings,
   browser: Browser,
+  minesweeper: Minesweeper,
+  mario: Mario,
 };
 
 interface Props {
