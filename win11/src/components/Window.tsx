@@ -9,6 +9,7 @@ import Settings from './apps/Settings';
 import Browser from './apps/Browser';
 import Minesweeper from './apps/Minesweeper';
 import Mario from './apps/Mario';
+import WordPad from './apps/WordPad';
 
 const APPS: Record<string, React.FC> = {
   calculator: Calculator,
@@ -19,6 +20,7 @@ const APPS: Record<string, React.FC> = {
   browser: Browser,
   minesweeper: Minesweeper,
   mario: Mario,
+  wordpad: WordPad,
 };
 
 interface Props {
