@@ -15,6 +15,7 @@ const PINNED_APPS = [
   { id: 'settings', name: '设置', icon: '⚙️' },
   { id: 'minesweeper', name: '扫雷', icon: '💣' },
   { id: 'mario', name: '超级马里奥', icon: '🍄' },
+  { id: 'wordpad', name: '写字板', icon: '📝' },
 ];
 
 export default function Taskbar({ onStartClick, startOpen }: Props) {
