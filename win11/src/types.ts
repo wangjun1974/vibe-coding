@@ -14,10 +14,3 @@ export interface WindowState {
   isFocused: boolean;
   zIndex: number;
 }
-
-export interface AppDef {
-  id: string;
-  name: string;
-  icon: string;
-  component: string;
-}

@@ -1,27 +1,7 @@
 import React, { useRef, useCallback } from 'react';
+import { APP_COMPONENTS } from '../appRegistry';
 import type { WindowState } from '../types';
 import { useWindowStore } from '../store/windowStore';
-import Calculator from './apps/Calculator';
-import Notepad from './apps/Notepad';
-import Terminal from './apps/Terminal';
-import Explorer from './apps/Explorer';
-import Settings from './apps/Settings';
-import Browser from './apps/Browser';
-import Minesweeper from './apps/Minesweeper';
-import Mario from './apps/Mario';
-import WordPad from './apps/WordPad';
-
-const APPS: Record<string, React.FC> = {
-  calculator: Calculator,
-  notepad: Notepad,
-  terminal: Terminal,
-  explorer: Explorer,
-  settings: Settings,
-  browser: Browser,
-  minesweeper: Minesweeper,
-  mario: Mario,
-  wordpad: WordPad,
-};
 
 interface Props {
   win: WindowState;
@@ -102,7 +82,7 @@ export default function Window({ win }: Props) {
 
   if (win.isMinimized) return null;
 
-  const AppComponent = APPS[win.app];
+  const AppComponent = APP_COMPONENTS[win.app];
   const style: React.CSSProperties = win.isMaximized
     ? { position: 'fixed', left: 0, top: 0, right: 0, bottom: 48, width: 'auto', height: 'auto', zIndex: win.zIndex }
     : { position: 'fixed', left: win.x, top: win.y, width: win.width, height: win.height, zIndex: win.zIndex };

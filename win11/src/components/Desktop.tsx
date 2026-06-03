@@ -1,17 +1,11 @@
 import React, { useState, useCallback } from 'react';
+import { DESKTOP_SHORTCUTS, getAppById } from '../appRegistry';
 import { useWindowStore } from '../store/windowStore';
 
 interface ContextMenu {
   x: number;
   y: number;
 }
-
-const DESKTOP_ICONS = [
-  { id: 'computer', name: '此电脑', icon: '🖥️' },
-  { id: 'recycle', name: '回收站', icon: '🗑️' },
-  { id: 'explorer', name: '文件资源管理器', icon: '📁' },
-  { id: 'notepad', name: '记事本', icon: '📝' },
-];
 
 const WALLPAPERS = [
   'linear-gradient(135deg, #0078d4 0%, #00b0f0 40%, #50c8ff 100%)',
@@ -35,14 +29,11 @@ export default function Desktop() {
   const closeMenu = useCallback(() => setContextMenu(null), []);
 
   const handleIconDblClick = (id: string) => {
-    const map: Record<string, [string, string, string]> = {
-      computer: ['explorer', '此电脑', '🖥️'],
-      recycle: ['explorer', '回收站', '🗑️'],
-      explorer: ['explorer', '文件资源管理器', '📁'],
-      notepad: ['notepad', '记事本', '📝'],
-    };
-    const args = map[id];
-    if (args) openWindow(...args);
+    const shortcut = DESKTOP_SHORTCUTS.find((s) => s.id === id);
+    if (!shortcut) return;
+    const app = getAppById(shortcut.appId);
+    if (!app) return;
+    openWindow(shortcut.appId, shortcut.name ?? app.name, shortcut.icon ?? app.icon);
   };
 
   return (
@@ -53,16 +44,22 @@ export default function Desktop() {
       onClick={closeMenu}
     >
       <div className="desktop-icons">
-        {DESKTOP_ICONS.map((icon) => (
+        {DESKTOP_SHORTCUTS.map((shortcut) => {
+          const app = getAppById(shortcut.appId);
+          if (!app) return null;
+          const icon = shortcut.icon ?? app.icon;
+          const name = shortcut.name ?? app.name;
+          return (
           <div
-            key={icon.id}
+            key={shortcut.id}
             className="desktop-icon"
-            onDoubleClick={() => handleIconDblClick(icon.id)}
+            onDoubleClick={() => handleIconDblClick(shortcut.id)}
           >
-            <span className="desktop-icon-img">{icon.icon}</span>
-            <span className="desktop-icon-name">{icon.name}</span>
+            <span className="desktop-icon-img">{icon}</span>
+            <span className="desktop-icon-name">{name}</span>
           </div>
-        ))}
+          );
+        })}
       </div>
 
       {contextMenu && (
