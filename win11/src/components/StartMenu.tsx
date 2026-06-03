@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
+import { PINNED_APPS, type AppMeta } from '../appRegistry';
 import { useWindowStore } from '../store/windowStore';
-
-const ALL_APPS = [
-  { id: 'calculator', name: '计算器', icon: '🔢' },
-  { id: 'notepad', name: '记事本', icon: '📝' },
-  { id: 'terminal', name: '终端', icon: '⬛' },
-  { id: 'explorer', name: '文件资源管理器', icon: '📁' },
-  { id: 'browser', name: '浏览器', icon: '🌐' },
-  { id: 'settings', name: '设置', icon: '⚙️' },
-];
 
 interface Props {
   onClose: () => void;
@@ -18,11 +10,11 @@ export default function StartMenu({ onClose }: Props) {
   const [search, setSearch] = useState('');
   const { openWindow } = useWindowStore();
 
-  const filtered = ALL_APPS.filter((a) =>
+  const filtered = PINNED_APPS.filter((a) =>
     a.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const launch = (app: typeof ALL_APPS[0]) => {
+  const launch = (app: AppMeta) => {
     openWindow(app.id, app.name, app.icon);
     onClose();
   };
@@ -45,7 +37,7 @@ export default function StartMenu({ onClose }: Props) {
         <>
           <div className="start-section-title">已固定</div>
           <div className="start-apps-grid">
-            {ALL_APPS.map((app) => (
+            {PINNED_APPS.map((app) => (
               <button key={app.id} className="start-app-item" onClick={() => launch(app)}>
                 <span className="start-app-icon">{app.icon}</span>
                 <span className="start-app-name">{app.name}</span>

@@ -34,4 +34,5 @@ The app simulates a windowed OS environment:
 1. Create `src/components/apps/MyApp.tsx`.
 2. Add size defaults to `APP_DEFAULTS` in `windowStore.ts`.
 3. Register the component in the `APPS` map in `Window.tsx`.
-4. Add an entry to `PINNED_APPS` in `Taskbar.tsx` and/or `DESKTOP_ICONS` in `Desktop.tsx`.
+4. Add an entry to `PINNED_APPS` in `appRegistry.ts` (used by Taskbar and StartMenu).
+5. Optionally add an entry to `DESKTOP_ICONS` in `Desktop.tsx`.
