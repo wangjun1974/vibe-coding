@@ -1,6 +1,5 @@
 /* =================== RESET & BASE =================== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; overflow: hidden; user-select: none; }
+body { overflow: hidden; user-select: none; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
 input { font-family: inherit; }
 
