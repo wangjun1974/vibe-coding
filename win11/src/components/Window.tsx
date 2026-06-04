@@ -2,6 +2,7 @@ import React, { useRef, useCallback } from 'react';
 import { APP_COMPONENTS } from '../appRegistry';
 import type { WindowState } from '../types';
 import { useWindowStore } from '../store/windowStore';
+import './Window.css';
 
 interface Props {
   win: WindowState;

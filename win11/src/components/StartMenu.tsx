@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { PINNED_APPS, type AppMeta } from '../appRegistry';
 import { useWindowStore } from '../store/windowStore';
+import './StartMenu.css';
 
 interface Props {
   onClose: () => void;

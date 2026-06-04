@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Explorer.css';
 
 interface FSNode { name: string; type: 'folder' | 'file'; size?: string; modified?: string }
 

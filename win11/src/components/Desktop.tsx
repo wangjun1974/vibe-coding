@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { DESKTOP_SHORTCUTS, getAppById } from '../appRegistry';
 import { useWindowStore } from '../store/windowStore';
+import './Desktop.css';
 
 interface ContextMenu {
   x: number;

@@ -5,6 +5,7 @@ import StartMenu from './components/StartMenu';
 import Window from './components/Window';
 import { useWindowStore } from './store/windowStore';
 import './App.css';
+import './components/Animations.css';
 
 export default function App() {
   const [startOpen, setStartOpen] = useState(false);

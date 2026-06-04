@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './Browser.css';
 
 const BOOKMARKS = [
   { name: 'Anthropic', url: 'https://anthropic.com', icon: '🤖' },

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './Calculator.css';
 
 const BUTTONS = [
   ['%', 'CE', 'C', '⌫'],

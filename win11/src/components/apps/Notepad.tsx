@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './Notepad.css';
 
 export default function Notepad() {
   const [text, setText] = useState('欢迎使用记事本！\n\n这是一个简单的文本编辑器。');

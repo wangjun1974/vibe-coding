@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './Settings.css';
 
 const SECTIONS = [
   { id: 'system', name: '系统', icon: '💻' },

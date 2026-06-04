@@ -1,0 +1,38 @@
+/* Desktop styles */
+/* =================== DESKTOP =================== */
+.desktop {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.5s;
+}
+.desktop-icons {
+  position: absolute; top: 16px; left: 16px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.desktop-icon {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px; padding: 8px 6px; border-radius: 6px;
+  cursor: pointer; width: 80px;
+  color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+  transition: background 0.15s;
+}
+.desktop-icon:hover { background: rgba(255,255,255,0.2); }
+.desktop-icon:active { background: rgba(255,255,255,0.3); }
+.desktop-icon-img { font-size: 36px; line-height: 1; }
+.desktop-icon-name { font-size: 12px; text-align: center; word-break: break-word; }
+
+/* Context Menu */
+.context-menu {
+  position: fixed; background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(20px); border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 8px; padding: 4px; min-width: 200px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2); z-index: 9999;
+  animation: fadeIn 0.1s ease;
+}
+.ctx-item {
+  padding: 8px 14px; border-radius: 5px; font-size: 13px;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+}
+.ctx-item:hover { background: rgba(0,0,0,0.06); }
+.ctx-divider { height: 1px; background: rgba(0,0,0,0.1); margin: 4px 0; }

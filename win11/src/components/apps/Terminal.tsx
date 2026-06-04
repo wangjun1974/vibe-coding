@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import './Terminal.css';
 
 interface Line { text: string; type: 'input' | 'output' | 'error' }
 

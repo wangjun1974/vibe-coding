@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import './Minesweeper.css';
 
 const ROWS = 9;
 const COLS = 9;
@@ -122,27 +123,27 @@ export default function Minesweeper() {
   }, [board, status]);
 
   return (
-    <div className="minesweeper-app" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 16, userSelect: 'none', background: '#c0c0c0', height: '100%', boxSizing: 'border-box' }}>
+    <div className="minesweeper-app">
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', background: '#c0c0c0', padding: '6px 10px', border: '2px solid', borderColor: '#fff #808080 #808080 #fff', marginBottom: 10, boxSizing: 'border-box' }}>
-        <div style={{ background: '#000', color: '#f00', fontFamily: 'monospace', fontSize: 22, fontWeight: 'bold', padding: '2px 6px', minWidth: 44, textAlign: 'center', letterSpacing: 2 }}>
+      <div className="ms-header">
+        <div className="ms-counter">
           {String(Math.max(0, flags)).padStart(3, '0')}
         </div>
         <button
           onClick={reset}
-          style={{ fontSize: 18, width: 34, height: 34, cursor: 'pointer', border: '2px solid', borderColor: '#fff #808080 #808080 #fff', background: '#c0c0c0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          className="ms-reset-btn"
         >
           {status === 'won' ? '😎' : status === 'lost' ? '😵' : '🙂'}
         </button>
-        <div style={{ background: '#000', color: '#f00', fontFamily: 'monospace', fontSize: 22, fontWeight: 'bold', padding: '2px 6px', minWidth: 44, textAlign: 'center', letterSpacing: 2 }}>
+        <div className="ms-counter">
           {String(time).padStart(3, '0')}
         </div>
       </div>
 
       {/* Grid */}
-      <div style={{ border: '2px solid', borderColor: '#808080 #fff #fff #808080' }}>
+      <div className="ms-grid">
         {board.map((row, r) => (
-          <div key={r} style={{ display: 'flex' }}>
+          <div key={r} className="ms-row">
             {row.map((cell, c) => {
               const revealed = cell.isRevealed;
               return (
@@ -150,17 +151,9 @@ export default function Minesweeper() {
                   key={c}
                   onClick={() => handleClick(r, c)}
                   onContextMenu={(e) => handleRightClick(e, r, c)}
+                  className={`ms-cell ${revealed ? 'revealed' : ''} ${cell.isMine && status === 'lost' ? 'mine-exploded' : ''} ${cell.isFlagged || cell.isMine ? 'has-icon' : ''}`}
                   style={{
-                    width: 26, height: 26,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    background: revealed ? (cell.isMine && status === 'lost' ? '#f00' : '#c0c0c0') : '#c0c0c0',
-                    border: revealed ? '1px solid #808080' : '2px solid',
-                    borderColor: revealed ? '#808080' : '#fff #808080 #808080 #fff',
-                    cursor: revealed ? 'default' : 'pointer',
-                    fontWeight: 'bold',
-                    fontSize: cell.isFlagged || cell.isMine ? 13 : 12,
                     color: revealed && !cell.isMine ? (NUM_COLORS[cell.neighbors] || 'transparent') : '#000',
-                    boxSizing: 'border-box',
                   }}
                 >
                   {revealed
@@ -174,9 +167,9 @@ export default function Minesweeper() {
       </div>
 
       {status !== 'playing' && (
-        <div style={{ marginTop: 12, fontSize: 14, fontWeight: 'bold', color: status === 'won' ? '#388e3c' : '#d32f2f', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div className={`ms-result ${status === 'won' ? 'won' : 'lost'}`}>
           {status === 'won' ? '🎉 你赢了！' : '💥 踩到地雷了！'}
-          <button onClick={reset} style={{ fontSize: 12, padding: '2px 10px', cursor: 'pointer', background: '#c0c0c0', border: '2px solid', borderColor: '#fff #808080 #808080 #fff' }}>
+          <button onClick={reset} className="ms-restart-btn">
             再来一局
           </button>
         </div>

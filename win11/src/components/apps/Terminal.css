@@ -1,0 +1,21 @@
+/* Terminal styles */
+/* =================== TERMINAL =================== */
+.terminal-app {
+  height: 100%; background: #0c0c0c; color: #cccccc;
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: 14px; overflow: hidden; cursor: text;
+  display: flex; flex-direction: column;
+}
+.terminal-output {
+  flex: 1; overflow-y: auto; padding: 8px 12px;
+}
+.terminal-line { white-space: pre-wrap; line-height: 1.5; }
+.terminal-line.input { color: #fff; }
+.terminal-line.error { color: #f85149; }
+.terminal-input-row { display: flex; align-items: center; line-height: 1.5; }
+.terminal-prompt { color: #cccccc; white-space: pre; }
+.terminal-input {
+  flex: 1; background: none; border: none; outline: none;
+  color: #fff; font-family: inherit; font-size: inherit;
+  line-height: 1.5; caret-color: #fff;
+}

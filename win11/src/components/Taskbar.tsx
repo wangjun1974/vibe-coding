@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { PINNED_APPS } from '../appRegistry';
 import { useWindowStore } from '../store/windowStore';
+import './Taskbar.css';
 
 interface Props {
   onStartClick: () => void;

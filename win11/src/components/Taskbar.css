@@ -1,0 +1,64 @@
+/* Taskbar styles */
+/* =================== TASKBAR =================== */
+.taskbar {
+  height: 48px; background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px); border-top: 1px solid rgba(0,0,0,0.1);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 12px; z-index: 1000; flex-shrink: 0;
+}
+.taskbar-center {
+  display: flex; align-items: center; gap: 2px;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.taskbar-right {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 2px;
+}
+.start-btn {
+  width: 40px; height: 40px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: #0078d4; transition: background 0.15s;
+}
+.start-btn:hover { background: rgba(0,0,0,0.07); }
+.start-btn.active { background: rgba(0,0,0,0.1); }
+.taskbar-btn {
+  width: 40px; height: 40px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: #333; transition: background 0.15s;
+}
+.taskbar-btn:hover { background: rgba(0,0,0,0.07); }
+.taskbar-divider { width: 1px; height: 20px; background: rgba(0,0,0,0.15); margin: 0 4px; }
+.taskbar-app {
+  position: relative; width: 44px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; font-size: 20px;
+  transition: background 0.15s;
+  flex-direction: column;
+}
+.taskbar-app:hover { background: rgba(0,0,0,0.07); }
+.taskbar-app.open .app-indicator {
+  position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+  width: 14px; height: 3px; border-radius: 2px; background: #666;
+}
+.taskbar-app.focused .app-indicator { background: #0078d4; width: 20px; }
+.sys-tray-btn {
+  padding: 0 4px; height: 40px; border-radius: 6px; font-size: 16px;
+  display: flex; align-items: center;
+  transition: background 0.15s;
+}
+.sys-tray-btn:hover { background: rgba(0,0,0,0.07); }
+.clock {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0 8px; height: 40px; justify-content: center;
+  border-radius: 6px; cursor: pointer; line-height: 1.3;
+  transition: background 0.15s;
+}
+.clock:hover { background: rgba(0,0,0,0.07); }
+.clock-time { font-size: 13px; font-weight: 500; }
+.clock-date { font-size: 11px; color: #555; }
+.notification-btn {
+  width: 40px; height: 40px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: #333; transition: background 0.15s;
+}
+.notification-btn:hover { background: rgba(0,0,0,0.07); }
