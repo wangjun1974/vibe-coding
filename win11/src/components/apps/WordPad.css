@@ -2,21 +2,22 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: #f5f5f5;
+  background: var(--bg-secondary);
 }
 
 .wordpad-menubar {
   display: flex;
   gap: 4px;
   padding: 4px 8px;
-  border-bottom: 1px solid #ddd;
-  background: #fff;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-primary);
 }
 
 .wordpad-menu-item {
   padding: 4px 8px;
   font-size: 13px;
   cursor: default;
+  color: var(--text-secondary);
 }
 
 .wordpad-toolbar {
@@ -24,8 +25,8 @@
   align-items: center;
   gap: 2px;
   padding: 4px 8px;
-  border-bottom: 1px solid #ddd;
-  background: #fafafa;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
   flex-wrap: wrap;
 }
 
@@ -36,9 +37,9 @@
 .wordpad-font-trigger {
   padding: 4px 8px;
   font-size: 13px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 3px;
-  background: #fff;
+  background: var(--bg-primary);
   cursor: pointer;
   min-width: 100px;
   text-align: left;
@@ -48,8 +49,8 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: #fff;
-  border: 1px solid #ccc;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   z-index: 10;
@@ -62,32 +63,33 @@
   padding: 6px 12px;
   cursor: pointer;
   font-size: 13px;
+  color: var(--text-secondary);
 }
 
 .wordpad-font-item:hover {
-  background: #e8f0fe;
+  background: var(--bg-accent);
 }
 
 .wordpad-font-size-select {
   padding: 4px 2px;
   font-size: 13px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
 }
 
 .wordpad-separator {
   width: 1px;
   height: 20px;
-  background: #ddd;
+  background: var(--border-color);
   margin: 0 4px;
 }
 
 .wordpad-btn {
   padding: 4px 8px;
   font-size: 13px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 3px;
-  background: #fff;
+  background: var(--bg-primary);
   cursor: pointer;
 }
 
@@ -97,10 +99,10 @@
   line-height: 1.6;
   outline: none;
   overflow-y: auto;
-  background: #fff;
+  background: var(--bg-primary);
   margin: 8px;
   border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-sm);
   min-height: 200px;
 }
 
@@ -108,8 +110,8 @@
   display: flex;
   justify-content: space-between;
   padding: 4px 12px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--border-color);
   font-size: 12px;
-  color: #666;
-  background: #f0f0f0;
+  color: var(--text-muted);
+  background: var(--bg-secondary);
 }

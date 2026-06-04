@@ -24,15 +24,15 @@
 
 /* Context Menu */
 .context-menu {
-  position: fixed; background: rgba(255,255,255,0.88);
-  backdrop-filter: blur(20px); border: 1px solid rgba(0,0,0,0.12);
+  position: fixed; background: var(--glass-bg-context);
+  backdrop-filter: blur(20px); border: 1px solid var(--border-hover);
   border-radius: 8px; padding: 4px; min-width: 200px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.2); z-index: 9999;
   animation: fadeIn 0.1s ease;
 }
 .ctx-item {
   padding: 8px 14px; border-radius: 5px; font-size: 13px;
-  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--text-secondary);
 }
-.ctx-item:hover { background: rgba(0,0,0,0.06); }
-.ctx-divider { height: 1px; background: rgba(0,0,0,0.1); margin: 4px 0; }
+.ctx-item:hover { background: var(--bg-hover); }
+.ctx-divider { height: 1px; background: var(--border-hover); margin: 4px 0; }

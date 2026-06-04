@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useThemeStore } from '../../store/themeStore';
 import './Settings.css';
 
 const SECTIONS = [
@@ -15,9 +16,9 @@ const SECTIONS = [
 
 export default function Settings() {
   const [section, setSection] = useState('system');
-  const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState(true);
   const [wifi, setWifi] = useState(true);
+  const { darkMode, toggleDarkMode } = useThemeStore();
 
   const renderContent = () => {
     switch (section) {
@@ -75,7 +76,7 @@ export default function Settings() {
                   <div className="s-item-desc">切换应用的颜色主题</div>
                 </div>
                 <label className="toggle">
-                  <input type="checkbox" checked={darkMode} onChange={(e) => setDarkMode(e.target.checked)} />
+                  <input type="checkbox" checked={darkMode} onChange={() => toggleDarkMode()} />
                   <span className="slider" />
                 </label>
               </div>

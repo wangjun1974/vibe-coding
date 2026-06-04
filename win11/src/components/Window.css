@@ -4,33 +4,33 @@
   border-radius: 8px; overflow: hidden;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
   display: flex; flex-direction: column;
-  background: #f3f3f3;
-  border: 1px solid rgba(0,0,0,0.12);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-hover);
   transition: box-shadow 0.15s;
 }
 .window.focused {
   box-shadow: 0 12px 48px rgba(0,0,0,0.28);
-  border-color: rgba(0,0,0,0.18);
+  border-color: var(--border-hover);
 }
 .window-titlebar {
-  height: 32px; background: #efefef;
+  height: 32px; background: var(--bg-tertiary);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 0 0 12px; flex-shrink: 0;
   cursor: default;
 }
-.window:not(.focused) .window-titlebar { background: #f5f5f5; }
+.window:not(.focused) .window-titlebar { background: var(--bg-tertiary); }
 .win-title { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
 .win-icon { font-size: 16px; flex-shrink: 0; }
-.win-name { font-size: 12px; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.win-name { font-size: 12px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .win-controls { display: flex; flex-shrink: 0; }
 .win-btn {
   width: 46px; height: 32px;
   display: flex; align-items: center; justify-content: center;
-  color: #333; transition: background 0.15s; font-size: 16px;
+  color: var(--text-secondary); transition: background 0.15s; font-size: 16px;
 }
-.win-btn:hover { background: rgba(0,0,0,0.07); }
+.win-btn:hover { background: var(--bg-hover-strong); }
 .win-btn.close:hover { background: #e81123; color: white; }
-.win-btn.maximize:hover { background: rgba(0,0,0,0.07); }
+.win-btn.maximize:hover { background: var(--bg-hover-strong); }
 .window-content { flex: 1; overflow: hidden; }
 
 /* Resize handles */

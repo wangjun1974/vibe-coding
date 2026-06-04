@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { APP_DEFAULTS } from '../appRegistry';
 import type { WindowState } from '../types';
 
@@ -15,71 +16,84 @@ interface WindowStore {
   resizeWindow: (id: string, width: number, height: number, x: number, y: number) => void;
 }
 
-export const useWindowStore = create<WindowStore>((set) => ({
-  windows: [],
+export const useWindowStore = create<WindowStore>()(
+  persist(
+    (set) => ({
+      windows: [],
 
-  openWindow: (app, title, icon) => {
-    const defaults = APP_DEFAULTS[app] || { width: 640, height: 480, minWidth: 320, minHeight: 240 };
-    const id = `${app}-${Date.now()}`;
-    const offset = Math.floor(Math.random() * 80);
-    set((state) => ({
-      windows: [
-        ...state.windows.map((w) => ({ ...w, isFocused: false })),
-        {
-          id,
-          title,
-          icon,
-          app,
-          x: 120 + offset,
-          y: 60 + offset,
-          width: defaults.width,
-          height: defaults.height,
-          minWidth: defaults.minWidth,
-          minHeight: defaults.minHeight,
-          isMinimized: false,
-          isMaximized: false,
-          isFocused: true,
-          zIndex: ++zCounter,
-        },
-      ],
-    }));
-  },
+      openWindow: (app, title, icon) => {
+        const defaults = APP_DEFAULTS[app] || { width: 640, height: 480, minWidth: 320, minHeight: 240 };
+        const id = `${app}-${Date.now()}`;
+        const offset = Math.floor(Math.random() * 80);
+        set((state) => ({
+          windows: [
+            ...state.windows.map((w) => ({ ...w, isFocused: false })),
+            {
+              id,
+              title,
+              icon,
+              app,
+              x: 120 + offset,
+              y: 60 + offset,
+              width: defaults.width,
+              height: defaults.height,
+              minWidth: defaults.minWidth,
+              minHeight: defaults.minHeight,
+              isMinimized: false,
+              isMaximized: false,
+              isFocused: true,
+              zIndex: ++zCounter,
+            },
+          ],
+        }));
+      },
 
-  closeWindow: (id) =>
-    set((state) => ({ windows: state.windows.filter((w) => w.id !== id) })),
+      closeWindow: (id) =>
+        set((state) => ({ windows: state.windows.filter((w) => w.id !== id) })),
 
-  focusWindow: (id) =>
-    set((state) => ({
-      windows: state.windows.map((w) =>
-        w.id === id
-          ? { ...w, isFocused: true, isMinimized: false, zIndex: ++zCounter }
-          : { ...w, isFocused: false }
-      ),
-    })),
+      focusWindow: (id) =>
+        set((state) => ({
+          windows: state.windows.map((w) =>
+            w.id === id
+              ? { ...w, isFocused: true, isMinimized: false, zIndex: ++zCounter }
+              : { ...w, isFocused: false }
+          ),
+        })),
 
-  minimizeWindow: (id) =>
-    set((state) => ({
-      windows: state.windows.map((w) =>
-        w.id === id ? { ...w, isMinimized: true, isFocused: false } : w
-      ),
-    })),
+      minimizeWindow: (id) =>
+        set((state) => ({
+          windows: state.windows.map((w) =>
+            w.id === id ? { ...w, isMinimized: true, isFocused: false } : w
+          ),
+        })),
 
-  toggleMaximize: (id) =>
-    set((state) => ({
-      windows: state.windows.map((w) =>
-        w.id === id ? { ...w, isMaximized: !w.isMaximized } : w
-      ),
-    })),
+      toggleMaximize: (id) =>
+        set((state) => ({
+          windows: state.windows.map((w) =>
+            w.id === id ? { ...w, isMaximized: !w.isMaximized } : w
+          ),
+        })),
 
-  moveWindow: (id, x, y) =>
-    set((state) => ({
-      windows: state.windows.map((w) => (w.id === id ? { ...w, x, y } : w)),
-    })),
+      moveWindow: (id, x, y) =>
+        set((state) => ({
+          windows: state.windows.map((w) => (w.id === id ? { ...w, x, y } : w)),
+        })),
 
-  resizeWindow: (id, width, height, x, y) =>
-    set((state) => ({
-      windows: state.windows.map((w) =>
-        w.id === id ? { ...w, width, height, x, y } : w
-      ),
-    })),
-}));
+      resizeWindow: (id, width, height, x, y) =>
+        set((state) => ({
+          windows: state.windows.map((w) =>
+            w.id === id ? { ...w, width, height, x, y } : w
+          ),
+        })),
+    }),
+    {
+      name: 'win11-windows',
+      onRehydrateStorage: () => (state) => {
+        if (state?.windows?.length) {
+          const maxZ = Math.max(...state.windows.map((w) => w.zIndex), 100);
+          zCounter = maxZ;
+        }
+      },
+    }
+  )
+);

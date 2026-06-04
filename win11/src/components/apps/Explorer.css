@@ -1,25 +1,25 @@
 /* Explorer styles */
 /* =================== EXPLORER =================== */
-.explorer-app { display: flex; flex-direction: column; height: 100%; background: #fafafa; }
+.explorer-app { display: flex; flex-direction: column; height: 100%; background: var(--bg-primary); }
 .explorer-toolbar {
   display: flex; align-items: center; gap: 8px;
-  padding: 6px 12px; border-bottom: 1px solid #e0e0e0;
-  background: white; flex-shrink: 0;
+  padding: 6px 12px; border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary); flex-shrink: 0;
 }
 .ex-btn {
   width: 32px; height: 28px; border-radius: 5px; font-size: 14px;
   display: flex; align-items: center; justify-content: center;
-  color: #333; transition: background 0.15s;
+  color: var(--text-secondary); transition: background 0.15s;
 }
-.ex-btn:hover:not(:disabled) { background: rgba(0,0,0,0.07); }
-.ex-btn:disabled { color: #bbb; cursor: default; }
+.ex-btn:hover:not(:disabled) { background: var(--bg-hover-strong); }
+.ex-btn:disabled { color: var(--text-disabled); cursor: default; }
 .breadcrumb {
   flex: 1; display: flex; align-items: center; gap: 4px;
-  background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.1);
+  background: var(--bg-hover); border: 1px solid var(--border-hover);
   border-radius: 5px; padding: 4px 10px; font-size: 13px;
 }
-.bc-sep { color: #aaa; }
-.bc-part { cursor: pointer; color: #333; }
+.bc-sep { color: var(--text-placeholder); }
+.bc-part { cursor: pointer; color: var(--text-secondary); }
 .bc-part:hover { text-decoration: underline; }
 .ex-toolbar-right { display: flex; gap: 2px; }
 .ex-view-btn {
@@ -27,31 +27,31 @@
   display: flex; align-items: center; justify-content: center;
   transition: background 0.15s;
 }
-.ex-view-btn:hover { background: rgba(0,0,0,0.07); }
-.ex-view-btn.active { background: rgba(0,120,212,0.15); color: #0078d4; }
+.ex-view-btn:hover { background: var(--bg-hover-strong); }
+.ex-view-btn.active { background: var(--bg-accent-active); color: var(--accent); }
 .explorer-body { display: flex; flex: 1; overflow: hidden; }
 .explorer-sidebar {
-  width: 180px; border-right: 1px solid #e0e0e0; padding: 8px 0;
-  overflow-y: auto; flex-shrink: 0; background: white;
+  width: 180px; border-right: 1px solid var(--border-color); padding: 8px 0;
+  overflow-y: auto; flex-shrink: 0; background: var(--bg-primary);
 }
 .sidebar-item {
   display: flex; align-items: center; gap: 10px;
   padding: 6px 14px; font-size: 13px; cursor: pointer;
-  transition: background 0.15s; color: #333;
+  transition: background 0.15s; color: var(--text-secondary);
 }
-.sidebar-item:hover { background: rgba(0,0,0,0.05); }
-.sidebar-item.active { background: rgba(0,120,212,0.12); color: #0078d4; font-weight: 500; }
+.sidebar-item:hover { background: var(--bg-hover); }
+.sidebar-item.active { background: var(--bg-accent-active); color: var(--accent); font-weight: 500; }
 .explorer-content { flex: 1; overflow: auto; }
-.explorer-empty { padding: 40px; text-align: center; color: #aaa; font-size: 14px; }
+.explorer-empty { padding: 40px; text-align: center; color: var(--text-placeholder); font-size: 14px; }
 .file-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .file-table th {
   text-align: left; padding: 6px 12px;
-  background: #f5f5f5; border-bottom: 1px solid #e0e0e0;
-  font-weight: 600; color: #555; position: sticky; top: 0;
+  background: var(--bg-secondary); border-bottom: 1px solid var(--border-color);
+  font-weight: 600; color: var(--text-tertiary); position: sticky; top: 0;
 }
-.file-table td { padding: 5px 12px; border-bottom: 1px solid #f0f0f0; }
-.file-table tr:hover td { background: rgba(0,0,0,0.03); }
-.file-table tr.selected td { background: rgba(0,120,212,0.1); }
+.file-table td { padding: 5px 12px; border-bottom: 1px solid var(--bg-tertiary); }
+.file-table tr:hover td { background: var(--bg-hover); }
+.file-table tr.selected td { background: var(--bg-accent); }
 .file-icon { margin-right: 8px; }
 .file-grid { display: flex; flex-wrap: wrap; gap: 4px; padding: 12px; }
 .file-grid-item {
@@ -64,6 +64,6 @@
 .file-grid-icon { font-size: 36px; }
 .file-grid-name { font-size: 12px; text-align: center; word-break: break-word; line-height: 1.3; }
 .explorer-status {
-  padding: 4px 14px; border-top: 1px solid #e0e0e0;
-  font-size: 12px; color: #777; background: white; flex-shrink: 0;
+  padding: 4px 14px; border-top: 1px solid var(--border-color);
+  font-size: 12px; color: var(--text-faint); background: var(--bg-primary); flex-shrink: 0;
 }
