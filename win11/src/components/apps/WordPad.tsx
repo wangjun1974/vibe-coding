@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 
 const FONT_SIZES = ['12', '14', '16', '18', '20', '24', '28', '32', '36'];
 const FONT_FAMILIES = ['宋体', '黑体', '微软雅黑', '楷体', 'Arial', 'Times New Roman'];

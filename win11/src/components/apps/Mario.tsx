@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 const CW = 760, CH = 460;
 const GRAVITY = 0.55, JUMP = -13, RUN = 4, TILE = 40;

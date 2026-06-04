@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function Notepad() {
   const [text, setText] = useState('欢迎使用记事本！\n\n这是一个简单的文本编辑器。');

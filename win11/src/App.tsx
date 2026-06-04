@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Desktop from './components/Desktop';
 import Taskbar from './components/Taskbar';
 import StartMenu from './components/StartMenu';

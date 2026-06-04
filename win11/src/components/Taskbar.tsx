@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { PINNED_APPS } from '../appRegistry';
 import { useWindowStore } from '../store/windowStore';
 

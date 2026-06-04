@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const BOOKMARKS = [
   { name: 'Anthropic', url: 'https://anthropic.com', icon: '🤖' },
