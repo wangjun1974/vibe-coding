@@ -1,0 +1,138 @@
+name: Auto-teardown Pages
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  TTL_SECONDS: 3600
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      should_teardown: ${{ steps.check.outputs.should_teardown }}
+    steps:
+      - name: Check if teardown needed
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LAST_DEPLOY=$(gh api "repos/${{ github.repository }}/actions/workflows/deploy.yml/runs?status=success&per_page=1" --jq '.workflow_runs[0].updated_at' 2>/dev/null)
+
+          if [ -z "$LAST_DEPLOY" ] || [ "$LAST_DEPLOY" = "null" ]; then
+            echo "No successful deployment found"
+            echo "should_teardown=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          DEPLOY_EPOCH=$(date -d "$LAST_DEPLOY" +%s)
+          NOW_EPOCH=$(date +%s)
+          AGE=$((NOW_EPOCH - DEPLOY_EPOCH))
+
+          echo "Last deploy: $LAST_DEPLOY (${AGE}s ago), TTL: ${TTL_SECONDS}s"
+
+          if [ "$AGE" -le "$TTL_SECONDS" ]; then
+            echo "Within TTL, no teardown needed"
+            echo "should_teardown=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          LAST_TEARDOWN=$(gh api "repos/${{ github.repository }}/actions/workflows/teardown.yml/runs?status=success&per_page=1" --jq '.workflow_runs[0].updated_at' 2>/dev/null)
+
+          if [ -n "$LAST_TEARDOWN" ] && [ "$LAST_TEARDOWN" != "null" ]; then
+            TEARDOWN_EPOCH=$(date -d "$LAST_TEARDOWN" +%s)
+            if [ "$TEARDOWN_EPOCH" -gt "$DEPLOY_EPOCH" ]; then
+              echo "Already torn down after last deploy"
+              echo "should_teardown=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          echo "TTL expired, teardown needed"
+          echo "should_teardown=true" >> "$GITHUB_OUTPUT"
+
+  teardown:
+    needs: check
+    if: needs.check.outputs.should_teardown == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Create expired page
+        run: |
+          mkdir -p site
+          cat > site/index.html << 'HTMLEOF'
+          <!DOCTYPE html>
+          <html lang="zh-CN">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Demo Expired — Windows 11 Emulator</title>
+            <style>
+              * { margin: 0; padding: 0; box-sizing: border-box; }
+              body {
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+                background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+                color: #fff;
+              }
+              .card {
+                background: rgba(255,255,255,0.12);
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255,255,255,0.2);
+                border-radius: 12px;
+                padding: 48px;
+                text-align: center;
+                max-width: 480px;
+              }
+              h1 { font-size: 28px; font-weight: 600; margin-bottom: 16px; }
+              p { font-size: 16px; line-height: 1.6; opacity: 0.9; margin-bottom: 12px; }
+              a {
+                display: inline-block;
+                margin-top: 20px;
+                padding: 10px 24px;
+                background: #fff;
+                color: #0078d4;
+                text-decoration: none;
+                border-radius: 6px;
+                font-weight: 600;
+                transition: opacity 0.2s;
+              }
+              a:hover { opacity: 0.9; }
+              .icon { font-size: 48px; margin-bottom: 16px; }
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <div class="icon">⏰</div>
+              <h1>Demo 已过期</h1>
+              <p>此在线演示已自动下线。</p>
+              <p>Push 到 main 分支即可重新部署，Demo 将在 1 小时后再次自动下线。</p>
+              <a href="https://github.com/wangjun1974/vibe-coding">查看源代码</a>
+            </div>
+          </body>
+          </html>
+          HTMLEOF
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
