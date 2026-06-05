@@ -13,6 +13,9 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  TTL_SECONDS: 120
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -48,5 +51,92 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  teardown:
+    needs: deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Wait for TTL to expire
+        run: |
+          echo "Demo is live. Waiting ${TTL_SECONDS}s before teardown..."
+          sleep "$TTL_SECONDS"
+
+      - name: Create expired page
+        run: |
+          TTL=$TTL_SECONDS
+          if [ "$TTL" -ge 3600 ]; then
+            DISPLAY="$((TTL / 3600)) 小时"
+          elif [ "$TTL" -ge 60 ]; then
+            DISPLAY="$((TTL / 60)) 分钟"
+          else
+            DISPLAY="${TTL} 秒"
+          fi
+
+          mkdir -p site
+          cat > site/index.html << HTMLEOF
+          <!DOCTYPE html>
+          <html lang="zh-CN">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Demo Expired — Windows 11 Emulator</title>
+            <style>
+              * { margin: 0; padding: 0; box-sizing: border-box; }
+              body {
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+                background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+                color: #fff;
+              }
+              .card {
+                background: rgba(255,255,255,0.12);
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255,255,255,0.2);
+                border-radius: 12px;
+                padding: 48px;
+                text-align: center;
+                max-width: 480px;
+              }
+              h1 { font-size: 28px; font-weight: 600; margin-bottom: 16px; }
+              p { font-size: 16px; line-height: 1.6; opacity: 0.9; margin-bottom: 12px; }
+              a {
+                display: inline-block;
+                margin-top: 20px;
+                padding: 10px 24px;
+                background: #fff;
+                color: #0078d4;
+                text-decoration: none;
+                border-radius: 6px;
+                font-weight: 600;
+                transition: opacity 0.2s;
+              }
+              a:hover { opacity: 0.9; }
+              .icon { font-size: 48px; margin-bottom: 16px; }
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <div class="icon">⏰</div>
+              <h1>Demo 已过期</h1>
+              <p>此在线演示已自动下线。</p>
+              <p>Push 到 main 分支即可重新部署，Demo 将在 ${DISPLAY} 后再次自动下线。</p>
+              <a href="https://github.com/wangjun1974/vibe-coding">查看源代码</a>
+            </div>
+          </body>
+          </html>
+          HTMLEOF
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
       - id: deployment
         uses: actions/deploy-pages@v4
