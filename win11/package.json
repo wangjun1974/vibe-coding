@@ -1,8 +1,20 @@
 {
-  "name": "win11",
-  "private": true,
-  "version": "0.0.0",
+  "name": "vibe-win11",
+  "version": "0.1.0",
+  "description": "A Windows 11 desktop environment emulator built with React, featuring draggable/resizable windows, taskbar, start menu, and built-in apps.",
+  "keywords": ["windows-11", "desktop-emulator", "react", "vite", "zustand", "simulator", "web-os"],
+  "homepage": "https://wangjun1974.github.io/vibe-coding/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wangjun1974/vibe-coding.git",
+    "directory": "win11"
+  },
+  "author": "Wang Jun",
+  "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
