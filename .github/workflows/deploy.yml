@@ -8,6 +8,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: pages
@@ -133,6 +134,16 @@ jobs:
           </body>
           </html>
           HTMLEOF
+
+      - name: Delete old pages artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
+            --jq '.artifacts[] | select(.name=="github-pages") | .id' | \
+          while read -r id; do
+            gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/$id"
+          done
 
       - uses: actions/upload-pages-artifact@v3
         with:
