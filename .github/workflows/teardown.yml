@@ -2,7 +2,7 @@ name: Auto-teardown Pages
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '* * * * *'
   workflow_dispatch:
 
 permissions:
@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  TTL_SECONDS: 3600
+  TTL_SECONDS: 120
 
 jobs:
   check:
