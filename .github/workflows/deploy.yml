@@ -128,7 +128,7 @@ jobs:
               <h1>Demo 已过期</h1>
               <p>此在线演示已自动下线。</p>
               <p>Push 到 main 分支即可重新部署，Demo 将在 ${DISPLAY} 后再次自动下线。</p>
-              <a href="https://github.com/wangjun1974/vibe-coding">查看源代码</a>
+              <a href="https://github.com/${{ github.repository }}">查看源代码</a>
             </div>
           </body>
           </html>
